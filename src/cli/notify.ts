@@ -56,9 +56,10 @@ export async function showNotification(): Promise<void> {
 
   // --- Star prompt (one-time) ---
   if (!hasStarPrompted) {
-    await askYesNo('  \u2b50 Star GoPeak on GitHub? (y/n): ');
-    // Star regardless of answer
-    await handleStar();
+    const wantsStar = await askYesNo('  \u2b50 Star GoPeak on GitHub? (y/n): ');
+    if (wantsStar) {
+      await handleStar();
+    }
     writeFileSync(STAR_PROMPTED_FILE, new Date().toISOString());
     console.log('');
   }
